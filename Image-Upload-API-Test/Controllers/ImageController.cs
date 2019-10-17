@@ -1,13 +1,14 @@
 ﻿using Image_Upload_API_Test.Models;
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Image_Upload_API_Test.Controllers {
 
+    [EnableCors(origins: "*", headers: "*", methods:"*")]
     public class ImageController : ApiController {
 
         [Route("api/image")]
@@ -27,7 +28,7 @@ namespace Image_Upload_API_Test.Controllers {
                 MultipartStreamProvider provider = new BlobStorageMultipartStreamProvider();
                 await Request.Content.ReadAsMultipartAsync(provider);
 
-                response = Request.CreateResponse(HttpStatusCode.OK, "File uploaded successfully. See:" + provider.ToString());
+                response = Request.CreateResponse(HttpStatusCode.OK, "File uploaded successfully.");
 
             } catch(Exception err) {
 
